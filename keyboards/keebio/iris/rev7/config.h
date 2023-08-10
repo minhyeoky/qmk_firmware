@@ -84,4 +84,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        define RGB_MATRIX_SPLIT { 34, 34 }
 #        define RGB_DISABLE_WHEN_USB_SUSPENDED
 #        define RGB_MATRIX_KEYPRESSES
+//
+#        define PERMISSIVE_HOLD
+#        define TAPPING_TERM 150
 //#    endif

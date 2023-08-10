@@ -1,1 +1,3 @@
-KEY_OVERRIDE_ENABLE = yes
+# My Rules
+COMBO_ENABLE = yes
+CONSOLE_ENABLE = no
