@@ -9,6 +9,13 @@
 #define _ADJUST 3
 
 /*
+ * Constants
+ */
+#define LT_SPC LT(LOWER, KC_SPC)
+#define MT_LGUI MT(MOD_LGUI, KC_ESC)
+#define LT_ENT LT(RAISE, KC_ENT)
+
+/*
  * Combos
  */
 const uint16_t PROGMEM combo_jk[] = {KC_J, KC_K, COMBO_END};
@@ -39,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                     KC_LOPT, MT(MOD_LGUI, KC_ESC),   LT(RAISE, KC_ENT),       LT(LOWER, KC_SPC), KC_BSPC,  KC_RCMD
+                                    KC_LOPT, MT_LGUI, LT_ENT,                    KC_BSPC, LT_SPC,  KC_RCMD
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
