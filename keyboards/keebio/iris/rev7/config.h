@@ -91,4 +91,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        define ONESHOT_TAP_TOGGLE 3  // Use 0 to disable
 #        define ONESHOT_TIMEOUT 5000  // ms
 #        define COMBO_TERM 20         // ms
+
+// Mouse key speed and acceleration.
+#        undef MOUSEKEY_DELAY
+#        define MOUSEKEY_DELAY          0
+#        undef MOUSEKEY_INTERVAL
+#        define MOUSEKEY_INTERVAL       8
+#        undef MOUSEKEY_WHEEL_DELAY
+#        define MOUSEKEY_WHEEL_DELAY    0
+#        undef MOUSEKEY_MAX_SPEED
+#        define MOUSEKEY_MAX_SPEED      4
 //#    endif
