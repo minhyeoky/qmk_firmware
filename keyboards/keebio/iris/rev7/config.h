@@ -87,4 +87,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 #        define PERMISSIVE_HOLD
 #        define TAPPING_TERM 150
+
+#        define ONESHOT_TAP_TOGGLE 3  // Use 0 to disable
+#        define ONESHOT_TIMEOUT 5000  // ms
+#        define COMBO_TERM 20         // ms
 //#    endif

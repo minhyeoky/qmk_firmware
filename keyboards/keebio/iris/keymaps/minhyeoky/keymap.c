@@ -9,20 +9,41 @@
 #define _ADJUST 3
 
 /*
- * Constants
+ * Mod Tap
+ */
+#define MT_LGUI MT(MOD_LGUI, KC_ESC)
+
+/*
+ * Tap Hold
  */
 #define LT_SPC LT(LOWER, KC_SPC)
-#define MT_LGUI MT(MOD_LGUI, KC_ESC)
 #define LT_ENT LT(RAISE, KC_ENT)
+
+/*
+ * One Shot Modifiers
+ */
+#define OS_LCTL OSM(MOD_LCTL)
+#define OS_LSFT OSM(MOD_LSFT)
+#define OS_LALT OSM(MOD_LALT)
+#define OS_LGUI OSM(MOD_LGUI)
 
 /*
  * Combos
  */
 const uint16_t PROGMEM combo_jk[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_ui[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM combo_mcomm[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_commdot[] = {KC_COMM, KC_DOT, COMBO_END};
+const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
+    COMBO(combo_ui, KC_MINUS),
+    COMBO(combo_io, KC_EQUAL),
+    COMBO(combo_mcomm, KC_LBRC),
+    COMBO(combo_commdot, KC_RBRC),
+    COMBO(combo_df, KC_ESC),
 };
-
 
 /*
  * Key Layers
@@ -42,11 +63,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                               KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
+     OS_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                               KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
+     OS_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    _______,          _______, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_RSFT,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
-                                    KC_LOPT, MT_LGUI, LT_ENT,                    KC_BSPC, LT_SPC,  KC_RCMD
+                                    OS_LALT, OS_LGUI, LT_ENT,                    KC_BSPC, LT_SPC,  KC_RCMD
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   ),
 
