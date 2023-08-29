@@ -21,8 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BASE 0
 #define SYMBOL 1
 #define NAVIGATION 2
+#define FUNCTION 3
 
-#define WINDOWS C(KC_DOWN)
+#define WINDOWS C(KC_UP)
 #define BRWSR_F G(KC_RBRC)
 #define BRWSR_B G(KC_LBRC)
 #define BRWSR_P S(C(KC_TAB))
@@ -41,7 +42,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #define LT_SPC LT(SYMBOL, KC_SPC)
 #define LT_ENT LT(NAVIGATION, KC_ENT)
-//#define LT_RCMD LT(NAVIGATION, KC_RCMD)
+#define LT_BSPC LT(FUNCTION, KC_BSPC)
+//#define LT_CMD LT(NAVIGATION, KC_RCMD)
 //#define TEST_NAV LT(3, OS_LALT)
 
 /*
@@ -83,6 +85,7 @@ const uint16_t PROGMEM combo_mcomm[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo_commdot[] = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_mod_df[] = {KC_D_SFT, KC_F_CTL, COMBO_END};
+const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
     COMBO(combo_mod_jk, KC_ENTER),
@@ -92,9 +95,8 @@ combo_t key_combos[] = {
     COMBO(combo_commdot, KC_RBRC),
     COMBO(combo_df, KC_ESC),
     COMBO(combo_mod_df, KC_ESC),
+    COMBO(combo_kl, KC_COLN),
 };
-
-
 
 //
 //
@@ -102,26 +104,25 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB,     KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,                          KC_Y,   KC_U,    KC_I,    KC_O,   KC_P, KC_BSLS,
+      KC_TAB,     KC_Q,    KC_W,   KC_E,    KC_R,    KC_T,                          KC_Y,    KC_U,    KC_I,    KC_O, KC_SCLN, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      OS_LCTL,KC_A_ALT,    KC_S,   KC_D,   KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,KC_SCLN,KC_QUOT,
+      OS_LCTL,    KC_A,    KC_S,   KC_D,    KC_F,    KC_G,                          KC_H,    KC_J,    KC_K,    KC_L,    KC_P, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      OS_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, OS_RSFT,
+      OS_LSFT,    KC_Z,    KC_X,   KC_C,    KC_V,    KC_B,                          KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, OS_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          OS_LALT, OS_LGUI, LT_ENT,     KC_BSPC,  LT_SPC, KC_RCMD
+                                          OS_LALT, OS_LGUI, LT_ENT,     LT_BSPC,  LT_SPC, KC_RCMD
                                       //`--------------------------'  `--------------------------'
-
   ),
 
     [SYMBOL] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
+      XXXXXXX, XXXXXXX, KC_LBRC, KC_LCBR,  KC_GRV,  XXXXXXX,                      XXXXXXX, KC_TILD, KC_RCBR, KC_RBRC, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, KC_LCBR, KC_RCBR,  KC_GRV,  KC_TILD,                      KC_LEFT, KC_DOWN,  KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
+      _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, KC_LPRN, KC_RPRN, _______, _______,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,   MO(3), _______,   _______, _______, _______
+                                          _______, _______,   MO(4),   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
@@ -129,15 +130,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, DISPY_P, SPACE_P, SPACE_N, DISPY_N, WINDOWS,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, DISPY_P, SPACE_P, SPACE_N, DISPY_N, WINDOWS,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, BRWSR_P, BRWSR_B, BRWSR_F, BRWSR_N, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, BRWSR_P, BRWSR_B, BRWSR_F, BRWSR_N, XXXXXXX,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
-    [3] = LAYOUT_split_3x6_3(
+    [FUNCTION] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+        KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,                        KC_F6,   KC_F7,   KC_F8,  KC_F9,   KC_F10,  KC_F11,  KC_F12,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      KC_LEFT, KC_DOWN,  KC_UP, KC_RIGHT, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX
+                                      //`--------------------------'  `--------------------------'
+  ),
+
+    [4] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       QK_BOOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -147,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
-
+  )
     /* [4] = LAYOUT_split_3x6_3( */
   /* //,-----------------------------------------------------.                    ,-----------------------------------------------------. */
     /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
@@ -158,5 +171,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------| */
     /*                                       XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX */
     /*                                   //`--------------------------'  `--------------------------' */
-  )
 };
