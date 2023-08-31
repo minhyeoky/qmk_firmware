@@ -83,6 +83,7 @@ const uint16_t PROGMEM combo_mcomm[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo_commdot[] = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_mod_df[] = {KC_D_SFT, KC_F_CTL, COMBO_END};
+const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
     COMBO(combo_mod_jk, KC_ENTER),
@@ -92,6 +93,7 @@ combo_t key_combos[] = {
     COMBO(combo_commdot, KC_RBRC),
     COMBO(combo_df, KC_ESC),
     COMBO(combo_mod_df, KC_ESC),
+    COMBO(combo_kl, KC_COLN)
 };
 
 
@@ -102,9 +104,9 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB,     KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,                          KC_Y,   KC_U,    KC_I,    KC_O,   KC_P, KC_BSLS,
+      KC_TAB,     KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,                          KC_Y,   KC_U,    KC_I,    KC_O,   KC_SCLN, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      OS_LCTL,KC_A_ALT,    KC_S,   KC_D,   KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,KC_SCLN,KC_QUOT,
+      OS_LCTL,KC_A_ALT,    KC_S,   KC_D,   KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,      KC_P, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       OS_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, OS_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -121,7 +123,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, XXXXXXX, KC_LPRN, KC_RPRN, _______, _______,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______,   MO(3), _______,   _______, _______, _______
+                                          _______, _______,   MO(3),   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
