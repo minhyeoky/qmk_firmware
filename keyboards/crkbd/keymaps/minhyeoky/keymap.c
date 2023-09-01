@@ -35,6 +35,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPACE_P C(A(KC_N))
 #define DISPY_P A(KC_N)
 #define DISPY_N A(KC_P)
+#define DISPY_1 C(KC_1)
+#define DISPY_2 C(KC_2)
+#define DISPY_3 C(KC_3)
+#define DISPY_4 C(KC_4)
+#define DISPY_5 C(KC_5)
 
 /*
  * Tap Hold
@@ -104,9 +109,9 @@ combo_t key_combos[] = {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      KC_TAB,     KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,                          KC_Y,   KC_U,    KC_I,    KC_O,   KC_SCLN, KC_BSLS,
+      KC_TAB,     KC_Q,    KC_W,   KC_E,   KC_R,    KC_T,                          KC_Y,   KC_U,    KC_I,    KC_O,      KC_P, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      OS_LCTL,KC_A_ALT,    KC_S,   KC_D,   KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,      KC_P, KC_QUOT,
+      OS_LCTL,    KC_A,    KC_S,   KC_D,   KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L,   KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       OS_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, OS_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -129,11 +134,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [NAVIGATION] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                     XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, DISPY_P, SPACE_P, SPACE_N, DISPY_N, WINDOWS,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, BRWSR_P, BRWSR_B, BRWSR_F, BRWSR_N, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, _______, _______, _______, _______, _______,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______, _______
                                       //`--------------------------'  `--------------------------'
