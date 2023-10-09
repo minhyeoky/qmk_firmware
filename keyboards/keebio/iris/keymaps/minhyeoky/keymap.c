@@ -7,6 +7,7 @@
 #define _LOWER 1
 #define _RAISE 2
 #define _NAV 3
+#define _LOL 4
 
 /*
  * Mod Tap
@@ -55,6 +56,7 @@ enum custom_keycodes {
   LOWER,
   RAISE,
   NAV,
+  LOL,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -81,7 +83,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤
      _______, _______, KC_LCBR, KC_RCBR, KC_UNDS, KC_PPLS,                            KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, _______, KC_BSLS,
   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤
-     _______, _______, KC_LPRN, KC_RPRN, _______, KC_MINS, _______,          _______, KC_PLUS, KC_END,  _______, _______, _______, _______,
+     _______, _______, KC_LPRN, KC_RPRN, KC_GRV,  KC_TILD, _______,          _______, KC_PLUS, KC_END,  _______, _______, _______, _______,
   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
@@ -113,6 +115,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                     _______, _______, _______,                   _______, _______, _______
                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘
   )
+
+/*   [_LOL] = LAYOUT( */
+/*   //┌────────┬────────┬────────┬────────┬────────┬────────┐                          ┌────────┬────────┬────────┬────────┬────────┬────────┐ */
+/*      KC_ESC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                               XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
+/*   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤ */
+/*      KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
+/*   //├────────┼────────┼────────┼────────┼────────┼────────┤                          ├────────┼────────┼────────┼────────┼────────┼────────┤ */
+/*      XXXXXXX, KC_A,    KC_S,    KC_D,    KC_F,    XXXXXXX,                            XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
+/*   //├────────┼────────┼────────┼────────┼────────┼────────┼────────┐        ┌────────┼────────┼────────┼────────┼────────┼────────┼────────┤ */
+/*      XXXXXXX, XXXXXXX, XXXXXXX, KC_C,    XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
+/*   //└────────┴────────┴────────┴───┬────┴───┬────┴───┬────┴───┬────┘        └───┬────┴───┬────┴───┬────┴───┬────┴────────┴────────┴────────┘ */
+/*                                     KC_LOPT, KC_SPC,  XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX */
+/*                                 // └────────┴────────┴────────┘                 └────────┴────────┴────────┘ */
+/*   ) */
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -148,6 +164,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         layer_on(_NAV);
       } else {
         layer_off(_NAV);
+      }
+      return false;
+      break;
+    case LOL:
+      if (record->event.pressed) {
+        layer_on(_LOL);
+      } else {
+        layer_off(_LOL);
       }
       return false;
       break;
