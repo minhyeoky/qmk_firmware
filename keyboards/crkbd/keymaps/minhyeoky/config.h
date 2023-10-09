@@ -25,12 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 /* Select hand configuration */
 
 #define MASTER_LEFT
-// #define MASTER_RIGHT
-// #define EE_HANDS
-
-//#define QUICK_TAP_TERM 0
-//#define TAPPING_TERM 100
-
 #ifdef RGBLIGHT_ENABLE
     #define RGBLIGHT_EFFECT_BREATHING
     #define RGBLIGHT_EFFECT_RAINBOW_MOOD
@@ -55,13 +49,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        define ONESHOT_TIMEOUT 5000  // ms
 #        define COMBO_TERM 20         // ms
 
-// Mouse key speed and acceleration.
-#        undef MOUSEKEY_DELAY
-#        define MOUSEKEY_DELAY          0
-#        undef MOUSEKEY_INTERVAL
-#        define MOUSEKEY_INTERVAL       8
-#        undef MOUSEKEY_WHEEL_DELAY
-#        define MOUSEKEY_WHEEL_DELAY    0
-#        undef MOUSEKEY_MAX_SPEED
-#        define MOUSEKEY_MAX_SPEED      4
-//#    endif
+# define OLED_TIMEOUT 0

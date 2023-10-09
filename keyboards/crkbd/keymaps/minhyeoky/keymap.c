@@ -89,6 +89,7 @@ const uint16_t PROGMEM combo_commdot[] = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_mod_df[] = {KC_D_SFT, KC_F_CTL, COMBO_END};
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
+const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
     COMBO(combo_mod_jk, KC_ENTER),
@@ -98,14 +99,13 @@ combo_t key_combos[] = {
     COMBO(combo_commdot, KC_RBRC),
     COMBO(combo_df, KC_ESC),
     COMBO(combo_mod_df, KC_ESC),
-    COMBO(combo_kl, KC_COLN)
+    COMBO(combo_kl, KC_COLN),
+    COMBO(combo_nm, KC_B),
 };
 
-
-
-//
-//
-
+/*
+ * Keymaps
+ */
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [BASE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -124,23 +124,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
       _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                         KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, KC_LCBR, KC_RCBR,  KC_GRV,  KC_TILD,                      KC_LEFT, KC_DOWN,  KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
+      _______, XXXXXXX, KC_LCBR, KC_RCBR,  KC_GRV, KC_TILD,                      KC_LEFT, KC_DOWN,  KC_UP,KC_RIGHT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, XXXXXXX, KC_LPRN, KC_RPRN, _______, _______,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, XXXXXXX, KC_LPRN, KC_RPRN, XXXXXXX, KC_LBRC,                      KC_RBRC, XXXXXXX, _______, _______, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______,   MO(3),   _______, _______, _______
+                                          _______, _______,  KC_SPC,   _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   ),
 
     [NAVIGATION] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______,
+      _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, _______, _______, _______, _______, _______,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          _______, _______, _______,    _______, _______, _______
+                                          _______, _______, _______,    _______, _______,   MO(3)
                                       //`--------------------------'  `--------------------------'
   ),
 
