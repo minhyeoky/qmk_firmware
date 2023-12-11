@@ -44,10 +44,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DISPY_5 C(KC_5)
 
 /*
- * For Vim
+ * Macros
  */
 enum custom_keycodes {
-    VIM_CNEXT = SAFE_RANGE,
+    BRACKET_COMPLETE = SAFE_RANGE,
+
+    // Vim
+    VIM_CNEXT,
     VIM_CPREV,
 };
 
@@ -101,6 +104,7 @@ const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
 const uint16_t PROGMEM combo_mod_df[] = {KC_D_SFT, KC_F_CTL, COMBO_END};
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
+const uint16_t PROGMEM combo_mtodot[] = {KC_M, KC_COMM, KC_DOT, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
     COMBO(combo_mod_jk, KC_ENTER),
@@ -112,6 +116,7 @@ combo_t key_combos[] = {
     COMBO(combo_mod_df, KC_ESC),
     COMBO(combo_kl, KC_COLN),
     COMBO(combo_nm, KC_B),
+    COMBO(combo_mtodot, BRACKET_COMPLETE),
 };
 
 /*
@@ -203,6 +208,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if (record->event.pressed) {
                 SEND_STRING("\e:cnext\n");
                 //SEND_STRING("\e]q\n");  // with unimpaired
+            }
+            break;
+        case BRACKET_COMPLETE:
+            if (record->event.pressed) {
+                SEND_STRING("[]" SS_TAP(X_LEFT));
             }
             break;
     }
