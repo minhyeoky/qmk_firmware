@@ -102,3 +102,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #        undef MOUSEKEY_MAX_SPEED
 #        define MOUSEKEY_MAX_SPEED      4
 //#    endif
+#define RGBLIGHT_DEFAULT_MODE (RGBLIGHT_MODE_RAINBOW_SWIRL + 2)
