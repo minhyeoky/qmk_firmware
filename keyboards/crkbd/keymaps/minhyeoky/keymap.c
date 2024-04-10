@@ -52,6 +52,9 @@ enum custom_keycodes {
     // Vim
     VIM_CNEXT,
     VIM_CPREV,
+
+    // Slack
+    SLACK_COPY_LINK,
 };
 
 /*
@@ -154,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______, _______,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, _______, _______, SLACK_COPY_LINK, _______, _______,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______,   MO(MANAGE)
                                       //`--------------------------'  `--------------------------'
@@ -213,6 +216,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case BRACKET_COMPLETE:
             if (record->event.pressed) {
                 SEND_STRING("[]" SS_TAP(X_LEFT));
+            }
+            break;
+        case SLACK_COPY_LINK:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_BTN2) SS_DELAY(50) "l");
             }
             break;
     }
