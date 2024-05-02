@@ -55,6 +55,9 @@ enum custom_keycodes {
 
     // Slack
     SLACK_COPY_LINK,
+
+    // Mac
+    CAPTURE,
 };
 
 /*
@@ -157,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, _______, _______, SLACK_COPY_LINK, _______, _______,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+      _______, _______, _______, SLACK_COPY_LINK, _______, CAPTURE,                      XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, _______,   MO(MANAGE)
                                       //`--------------------------'  `--------------------------'
@@ -201,18 +204,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case VIM_CPREV:
-            if (record->event.pressed) {
-                SEND_STRING("\e:cprev\n");
-                //SEND_STRING("\e\[q\n");  // with unimpaired
-            }
-            break;
-        case VIM_CNEXT:
-            if (record->event.pressed) {
-                SEND_STRING("\e:cnext\n");
-                //SEND_STRING("\e]q\n");  // with unimpaired
-            }
-            break;
         case BRACKET_COMPLETE:
             if (record->event.pressed) {
                 SEND_STRING("[]" SS_TAP(X_LEFT));
@@ -221,6 +212,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case SLACK_COPY_LINK:
             if (record->event.pressed) {
                 SEND_STRING(SS_TAP(X_BTN2) SS_DELAY(50) "l");
+            }
+            break;
+        case CAPTURE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LCTL(SS_LSFT(SS_LGUI("4"))) SS_DELAY(200) " ");
             }
             break;
     }
