@@ -64,7 +64,7 @@ enum custom_keycodes {
  * Tap Hold
  */
 #define LT_SPC LT(SYMBOL, KC_SPC)
-#define LT_ENT LT(L_NAV, KC_ENT)
+#define ENT_OR_LNAV LT(L_NAV, KC_ENT)
 #define LT_RCMD LT(R_NAV, KC_RCMD)
 //#define LT_RCMD LT(NAVIGATION, KC_RCMD)
 //#define TEST_NAV LT(3, OS_LALT)
@@ -79,50 +79,25 @@ enum custom_keycodes {
 #define OS_LGUI OSM(MOD_LGUI)
 
 /*
- * Home Row Mods
- */
-// ALT
-#define KC_A_ALT MT(OS_LALT, KC_A)
-#define SCLN_ALT MT(MOD_LALT, KC_SCLN)
-
-// COMMAND
-#define KC_S_CMD MT(MOD_LGUI, KC_S)
-#define KC_L_CMD MT(MOD_LGUI, KC_L)
-
-// SHIFT
-#define KC_D_SFT MT(MOD_LSFT, KC_D)
-#define KC_K_SFT MT(MOD_LSFT, KC_K)
-
-// CTRL
-#define KC_F_CTL MT(MOD_LCTL, KC_F)
-#define KC_J_CTL MT(MOD_LCTL, KC_J)
-
-/*
  * Combos
  */
 const uint16_t PROGMEM combo_jk[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_mod_jk[] = {KC_J_CTL, KC_K_SFT, COMBO_END};
 const uint16_t PROGMEM combo_ui[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM combo_io[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM combo_mcomm[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM combo_commdot[] = {KC_COMM, KC_DOT, COMBO_END};
 const uint16_t PROGMEM combo_df[] = {KC_D, KC_F, COMBO_END};
-const uint16_t PROGMEM combo_mod_df[] = {KC_D_SFT, KC_F_CTL, COMBO_END};
 const uint16_t PROGMEM combo_kl[] = {KC_K, KC_L, COMBO_END};
 const uint16_t PROGMEM combo_nm[] = {KC_N, KC_M, COMBO_END};
-const uint16_t PROGMEM combo_mtodot[] = {KC_M, KC_COMM, KC_DOT, COMBO_END};
 combo_t key_combos[] = {
     COMBO(combo_jk, KC_ENTER),
-    COMBO(combo_mod_jk, KC_ENTER),
     COMBO(combo_ui, KC_MINUS),
     COMBO(combo_io, KC_EQUAL),
     COMBO(combo_mcomm, KC_LBRC),
     COMBO(combo_commdot, KC_RBRC),
     COMBO(combo_df, KC_ESC),
-    COMBO(combo_mod_df, KC_ESC),
     COMBO(combo_kl, KC_COLN),
     COMBO(combo_nm, KC_B),
-    COMBO(combo_mtodot, BRACKET_COMPLETE),
 };
 
 /*
@@ -137,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LSFT,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, OS_RSFT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          OS_LALT, OS_LGUI, LT_ENT,     KC_BSPC,  LT_SPC, LT_RCMD
+                                          OS_LALT, OS_LGUI, ENT_OR_LNAV,     KC_BSPC,  LT_SPC, LT_RCMD
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -180,7 +155,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [MANAGE] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-      QK_BOOT, RGB_MOD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
+      QK_BOOT, RGB_MOD, RGB_M_G, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       RGB_TOG, RGB_HUI, RGB_SAI, RGB_VAI, XXXXXXX, XXXXXXX,                      KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -188,18 +163,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX
                                       //`--------------------------'  `--------------------------'
-
-    /* [4] = LAYOUT_split_3x6_3( */
-  /* //,-----------------------------------------------------.                    ,-----------------------------------------------------. */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-  /* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-  /* //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------| */
-    /*   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, */
-  /* //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------| */
-    /*                                       XXXXXXX, XXXXXXX, XXXXXXX,   XXXXXXX, XXXXXXX, XXXXXXX */
-    /*                                   //`--------------------------'  `--------------------------' */
-  )
+  ),
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
