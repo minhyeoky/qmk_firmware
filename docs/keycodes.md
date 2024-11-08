@@ -294,11 +294,11 @@ See also: [Backlighting](features/backlight)
 
 See also: [Bluetooth](features/bluetooth)
 
-|Key                  |Aliases  |Description                                   |
-|---------------------|---------|----------------------------------------------|
-|`QK_OUTPUT_AUTO`     |`OU_AUTO`|Automatically switch between USB and Bluetooth|
-|`QK_OUTPUT_USB`      |`OU_USB` |USB only                                      |
-|`QK_OUTPUT_BLUETOOTH`|`OU_BT`  |Bluetooth only                                |
+| Key                   | Aliases              | Description                                    |
+|-----------------------|----------------------|------------------------------------------------|
+| `QK_OUTPUT_NEXT`      | `OU_NEXT`, `OU_AUTO` | Automatically switch between USB and Bluetooth |
+| `QK_OUTPUT_USB`       | `OU_USB`             | USB only                                       |
+| `QK_OUTPUT_BLUETOOTH` | `OU_BT`              | Bluetooth only                                 |
 
 ## Caps Word {#caps-word}
 
@@ -611,24 +611,27 @@ See also: [MIDI](features/midi)
 
 See also: [Mouse Keys](features/mouse_keys)
 
-|Key             |Aliases  |Description                |
-|----------------|---------|---------------------------|
-|`KC_MS_UP`      |`KC_MS_U`|Mouse Cursor Up            |
-|`KC_MS_DOWN`    |`KC_MS_D`|Mouse Cursor Down          |
-|`KC_MS_LEFT`    |`KC_MS_L`|Mouse Cursor Left          |
-|`KC_MS_RIGHT`   |`KC_MS_R`|Mouse Cursor Right         |
-|`KC_MS_BTN1`    |`KC_BTN1`|Mouse Button 1             |
-|`KC_MS_BTN2`    |`KC_BTN2`|Mouse Button 2             |
-|`KC_MS_BTN3`    |`KC_BTN3`|Mouse Button 3             |
-|`KC_MS_BTN4`    |`KC_BTN4`|Mouse Button 4             |
-|`KC_MS_BTN5`    |`KC_BTN5`|Mouse Button 5             |
-|`KC_MS_WH_UP`   |`KC_WH_U`|Mouse Wheel Up             |
-|`KC_MS_WH_DOWN` |`KC_WH_D`|Mouse Wheel Down           |
-|`KC_MS_WH_LEFT` |`KC_WH_L`|Mouse Wheel Left           |
-|`KC_MS_WH_RIGHT`|`KC_WH_R`|Mouse Wheel Right          |
-|`KC_MS_ACCEL0`  |`KC_ACL0`|Set mouse acceleration to 0|
-|`KC_MS_ACCEL1`  |`KC_ACL1`|Set mouse acceleration to 1|
-|`KC_MS_ACCEL2`  |`KC_ACL2`|Set mouse acceleration to 2|
+|Key                      |Aliases  |Description                |
+|-------------------------|---------|---------------------------|
+|`QK_MOUSE_CURSOR_UP`     |`MS_UP`  |Mouse cursor up            |
+|`QK_MOUSE_CURSOR_DOWN`   |`MS_DOWN`|Mouse cursor down          |
+|`QK_MOUSE_CURSOR_LEFT`   |`MS_LEFT`|Mouse cursor left          |
+|`QK_MOUSE_CURSOR_RIGHT`  |`MS_RGHT`|Mouse cursor right         |
+|`QK_MOUSE_BUTTON_1`      |`MS_BTN1`|Mouse button 1             |
+|`QK_MOUSE_BUTTON_2`      |`MS_BTN2`|Mouse button 2             |
+|`QK_MOUSE_BUTTON_3`      |`MS_BTN3`|Mouse button 3             |
+|`QK_MOUSE_BUTTON_4`      |`MS_BTN4`|Mouse button 4             |
+|`QK_MOUSE_BUTTON_5`      |`MS_BTN5`|Mouse button 5             |
+|`QK_MOUSE_BUTTON_6`      |`MS_BTN6`|Mouse button 6             |
+|`QK_MOUSE_BUTTON_7`      |`MS_BTN7`|Mouse button 7             |
+|`QK_MOUSE_BUTTON_8`      |`MS_BTN8`|Mouse button 8             |
+|`QK_MOUSE_WHEEL_UP`      |`MS_WHLU`|Mouse wheel up             |
+|`QK_MOUSE_WHEEL_DOWN`    |`MS_WHLD`|Mouse wheel down           |
+|`QK_MOUSE_WHEEL_LEFT`    |`MS_WHLL`|Mouse wheel left           |
+|`QK_MOUSE_WHEEL_RIGHT`   |`MS_WHLR`|Mouse wheel right          |
+|`QK_MOUSE_ACCELERATION_0`|`MS_ACL0`|Set mouse acceleration to 0|
+|`QK_MOUSE_ACCELERATION_1`|`MS_ACL1`|Set mouse acceleration to 1|
+|`QK_MOUSE_ACCELERATION_2`|`MS_ACL2`|Set mouse acceleration to 2|
 
 ## Modifiers {#modifiers}
 
@@ -725,23 +728,25 @@ See also: [RGB Lighting](features/rgblight)
 |`RGB_MODE_RGBTEST`            |`RGB_M_T` |Red, Green, Blue test animation mode (deprecated)                    |
 |`RGB_MODE_TWINKLE`            |`RGB_M_TW`|Twinkle animation mode (deprecated)                                  |
 
-## RGB Matrix Lighting {#rgb-matrix-lighting}
+## RGB Matrix {#rgb-matrix}
 
-See also: [RGB Matrix Lighting](features/rgb_matrix)
+See also: [RGB Matrix](features/rgb_matrix)
 
-|Key                |Aliases   |Description                                                                           |
-|-------------------|----------|--------------------------------------------------------------------------------------|
-|`RGB_TOG`          |          |Toggle RGB lighting on or off                                                         |
-|`RGB_MODE_FORWARD` |`RGB_MOD` |Cycle through modes, reverse direction when Shift is held                             |
-|`RGB_MODE_REVERSE` |`RGB_RMOD`|Cycle through modes in reverse, forward direction when Shift is held                  |
-|`RGB_HUI`          |          |Increase hue, decrease hue when Shift is held                                         |
-|`RGB_HUD`          |          |Decrease hue, increase hue when Shift is held                                         |
-|`RGB_SAI`          |          |Increase saturation, decrease saturation when Shift is held                           |
-|`RGB_SAD`          |          |Decrease saturation, increase saturation when Shift is held                           |
-|`RGB_VAI`          |          |Increase value (brightness), decrease value when Shift is held                        |
-|`RGB_VAD`          |          |Decrease value (brightness), increase value when Shift is held                        |
-|`RGB_SPI`          |          |Increase effect speed (does not support eeprom yet), decrease speed when Shift is held|
-|`RGB_SPD`          |          |Decrease effect speed (does not support eeprom yet), increase speed when Shift is held|
+|Key                            |Aliases  |Description                        |
+|-------------------------------|---------|-----------------------------------|
+|`QK_RGB_MATRIX_ON`             |`RM_ON`  |Turn on RGB Matrix                 |
+|`QK_RGB_MATRIX_OFF`            |`RM_OFF` |Turn off RGB Matrix                |
+|`QK_RGB_MATRIX_TOGGLE`         |`RM_TOGG`|Toggle RGB Matrix on or off        |
+|`QK_RGB_MATRIX_MODE_NEXT`      |`RM_NEXT`|Cycle through animations           |
+|`QK_RGB_MATRIX_MODE_PREVIOUS`  |`RM_PREV`|Cycle through animations in reverse|
+|`QK_RGB_MATRIX_HUE_UP`         |`RM_HUEU`|Cycle through hue                  |
+|`QK_RGB_MATRIX_HUE_DOWN`       |`RM_HUED`|Cycle through hue in reverse       |
+|`QK_RGB_MATRIX_SATURATION_UP`  |`RM_SATU`|Increase the saturation            |
+|`QK_RGB_MATRIX_SATURATION_DOWN`|`RM_SATD`|Decrease the saturation            |
+|`QK_RGB_MATRIX_VALUE_UP`       |`RM_VALU`|Increase the brightness level      |
+|`QK_RGB_MATRIX_VALUE_DOWN`     |`RM_VALD`|Decrease the brightness level      |
+|`QK_RGB_MATRIX_SPEED_UP`       |`RM_SPDU`|Increase the animation speed       |
+|`QK_RGB_MATRIX_SPEED_DOWN`     |`RM_SPDD`|Decrease the animation speed       |
 
 ## US ANSI Shifted Symbols {#us-ansi-shifted-symbols}
 
