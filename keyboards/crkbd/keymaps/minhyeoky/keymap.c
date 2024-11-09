@@ -60,6 +60,9 @@ enum custom_keycodes {
 
     // Mac
     CAPTURE,
+
+    // skhd (yabai - recent space)
+    RECENT_SPACE,
 };
 
 /*
@@ -137,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, KC_4,    KC_5,    KC_6,   XXXXXXX,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      MO(MANAGE), _______, _______, SLACK_COPY_LINK, _______, CAPTURE,           XXXXXXX, KC_1,    KC_2,    KC_3,   _______,  KC_0,
+      MO(MANAGE), _______, RECENT_SPACE, SLACK_COPY_LINK, XXXXXXX, CAPTURE,           XXXXXXX, KC_1,    KC_2,    KC_3,   _______,  KC_0,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______, _______, _______,    _______, KC_0,    KC_0
                                       //`--------------------------'  `--------------------------'
@@ -183,6 +186,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case CAPTURE:
             if (record->event.pressed) {
                 SEND_STRING(SS_LCTL(SS_LSFT(SS_LGUI("4"))) SS_DELAY(200) " ");
+            }
+            break;
+        case RECENT_SPACE:
+            if (record->event.pressed) {
+                SEND_STRING(SS_LALT(SS_LSFT(SS_TAP(X_TAB))));
             }
             break;
     }
