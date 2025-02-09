@@ -28,6 +28,7 @@ QUANTUM_SRC += \
     $(QUANTUM_DIR)/sync_timer.c \
     $(QUANTUM_DIR)/logging/debug.c \
     $(QUANTUM_DIR)/logging/sendchar.c \
+    $(QUANTUM_DIR)/process_keycode/process_default_layer.c \
 
 VPATH += $(QUANTUM_DIR)/logging
 # Fall back to lib/printf if there is no platform provided print
@@ -215,7 +216,7 @@ else
         COMMON_VPATH += $(PLATFORM_PATH)/$(PLATFORM_KEY)/$(DRIVER_DIR)/flash
         COMMON_VPATH += $(DRIVER_PATH)/flash
         SRC += eeprom_driver.c eeprom_legacy_emulated_flash.c legacy_flash_ops.c
-      else ifneq ($(filter $(MCU_SERIES),STM32F1xx STM32F3xx STM32F4xx STM32L4xx STM32G4xx WB32F3G71xx WB32FQ95xx GD32VF103),)
+      else ifneq ($(filter $(MCU_SERIES),STM32F1xx STM32F3xx STM32F4xx STM32L4xx STM32G4xx WB32F3G71xx WB32FQ95xx AT32F415 GD32VF103),)
         # Wear-leveling EEPROM implementation, backed by MCU flash
         OPT_DEFS += -DEEPROM_DRIVER -DEEPROM_WEAR_LEVELING
         SRC += eeprom_driver.c eeprom_wear_leveling.c
@@ -432,6 +433,13 @@ ifeq ($(strip $(LED_MATRIX_ENABLE)), yes)
         SRC += snled27351-mono.c
     endif
 
+    ifeq ($(strip $(LED_MATRIX_CUSTOM_KB)), yes)
+        OPT_DEFS += -DLED_MATRIX_CUSTOM_KB
+    endif
+
+    ifeq ($(strip $(LED_MATRIX_CUSTOM_USER)), yes)
+        OPT_DEFS += -DLED_MATRIX_CUSTOM_USER
+    endif
 endif
 
 # Deprecated driver names - do not use
@@ -456,6 +464,10 @@ ifeq ($(strip $(RGB_MATRIX_ENABLE)), yes)
     COMMON_VPATH += $(QUANTUM_DIR)/rgb_matrix/animations
     COMMON_VPATH += $(QUANTUM_DIR)/rgb_matrix/animations/runners
     POST_CONFIG_H += $(QUANTUM_DIR)/rgb_matrix/post_config.h
+
+    # TODO: Remove this
+    SRC += $(QUANTUM_DIR)/process_keycode/process_underglow.c
+
     SRC += $(QUANTUM_DIR)/process_keycode/process_rgb_matrix.c
     SRC += $(QUANTUM_DIR)/color.c
     SRC += $(QUANTUM_DIR)/rgb_matrix/rgb_matrix.c
@@ -621,6 +633,10 @@ ifeq ($(strip $(VIA_ENABLE)), yes)
     RAW_ENABLE := yes
     BOOTMAGIC_ENABLE := yes
     TRI_LAYER_ENABLE := yes
+endif
+
+ifeq ($(strip $(DYNAMIC_KEYMAP_ENABLE)), yes)
+    SEND_STRING_ENABLE := yes
 endif
 
 VALID_CUSTOM_MATRIX_TYPES:= yes lite no
@@ -927,6 +943,8 @@ ifeq ($(strip $(WS2812_DRIVER_REQUIRED)), yes)
     endif
 
     OPT_DEFS += -DWS2812_$(strip $(shell echo $(WS2812_DRIVER) | tr '[:lower:]' '[:upper:]'))
+
+    COMMON_VPATH += $(DRIVER_PATH)/led
 
     SRC += ws2812.c ws2812_$(strip $(WS2812_DRIVER)).c
 
