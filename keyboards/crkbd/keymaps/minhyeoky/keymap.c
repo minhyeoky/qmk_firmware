@@ -58,6 +58,7 @@ enum custom_keycodes {
 
     // Mac
     CAPTURE,
+    ALT_TAB,
 
     // skhd (yabai - recent space)
     RECENT_SPACE,
@@ -139,7 +140,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
     BRWSR_TAB, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, KC_7,    KC_8,    KC_9,   XXXXXXX,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, KC_4,    KC_5,    KC_6,   XXXXXXX,  _______,
+      ALT_TAB, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, KC_4,    KC_5,    KC_6,   XXXXXXX,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       MO(MANAGE), _______, RECENT_SPACE, SLACK_COPY_LINK, XXXXXXX, CAPTURE,           XXXXXXX, KC_1,    KC_2,    KC_3,   _______,  KC_0,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
@@ -176,6 +177,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool is_brwsr_tab = false;
 uint16_t brwsr_tab_timer = 0;
 
+// states for ALT_TAB
+bool is_alt_tab = false;
+uint16_t alt_tab_timer = 0;
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case BRACKET_COMPLETE:
@@ -210,17 +215,35 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 unregister_code(KC_TAB);
             }
             break;
+        case ALT_TAB:
+            if (record->event.pressed) {
+                if (!is_alt_tab) {
+                    is_alt_tab = true;
+                    register_code(KC_LALT);
+                }
+                alt_tab_timer = timer_read();
+                register_code(KC_TAB);
+            } else {
+                unregister_code(KC_TAB);
+            }
+            break;
         case KC_LEFT:
         case KC_RIGHT:
         case KC_TAB:
         case S(KC_TAB):
           if (record->event.pressed && is_brwsr_tab) {
-            brwsr_tab_timer = timer_read(); // 타이머 리셋
+            brwsr_tab_timer = timer_read();
+          }
+          if (record->event.pressed && is_alt_tab) {
+            alt_tab_timer = timer_read();
           }
           break;
         case KC_ENTER:
           if (record->event.pressed && is_brwsr_tab) {
             brwsr_tab_timer = 0;
+          }
+          if (record->event.pressed && is_alt_tab) {
+            alt_tab_timer = 0;
           }
           break;
         }
@@ -233,6 +256,13 @@ void matrix_scan_user(void) {
     if (timer_elapsed(brwsr_tab_timer) > 1000) {
       unregister_code(KC_LCTL);
       is_brwsr_tab = false;
+    }
+  }
+
+  if (is_alt_tab) {
+    if (timer_elapsed(alt_tab_timer) > 1000) {
+      unregister_code(KC_LALT);
+      is_alt_tab = false;
     }
   }
 }
