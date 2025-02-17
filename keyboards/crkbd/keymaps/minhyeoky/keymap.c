@@ -61,9 +61,6 @@ enum custom_keycodes {
 
     // skhd (yabai - recent space)
     RECENT_SPACE,
-
-    // Browser
-    BRWSR_TAB,
 };
 
 /*
@@ -137,7 +134,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [L_NAV] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
-    BRWSR_TAB, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, KC_7,    KC_8,    KC_9,   XXXXXXX,  _______,
+      _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                      XXXXXXX, KC_7,    KC_8,    KC_9,   XXXXXXX,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                      XXXXXXX, KC_4,    KC_5,    KC_6,   XXXXXXX,  _______,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
@@ -172,10 +169,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-// states for BRWSR_TAB
-bool is_brwsr_tab = false;
-uint16_t brwsr_tab_timer = 0;
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case BRACKET_COMPLETE:
@@ -198,42 +191,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 SEND_STRING(SS_LALT(SS_LSFT(SS_TAP(X_TAB))));
             }
             break;
-        case BRWSR_TAB:
-            if (record->event.pressed) {
-                if (!is_brwsr_tab) {
-                    is_brwsr_tab = true;
-                    register_code(KC_LCTL);
-                }
-                brwsr_tab_timer = timer_read();
-                register_code(KC_TAB);
-            } else {
-                unregister_code(KC_TAB);
-            }
-            break;
-        case KC_LEFT:
-        case KC_RIGHT:
-        case KC_TAB:
-        case S(KC_TAB):
-          if (record->event.pressed && is_brwsr_tab) {
-            brwsr_tab_timer = timer_read(); // 타이머 리셋
-          }
-          break;
-        case KC_ENTER:
-          if (record->event.pressed && is_brwsr_tab) {
-            brwsr_tab_timer = 0;
-          }
-          break;
-        }
+    }
     return true;
 };
-
-// Timer
-void matrix_scan_user(void) {
-  if (is_brwsr_tab) {
-    if (timer_elapsed(brwsr_tab_timer) > 1000) {
-      unregister_code(KC_LCTL);
-      is_brwsr_tab = false;
-    }
-  }
-}
 
