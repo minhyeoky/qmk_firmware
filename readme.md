@@ -1,3 +1,31 @@
+# My QMK Keyboard Setup
+
+## Keyboard Information
+- **Keyboard**: Corne (crkbd) - Rev 4.1 Standard
+- **Keymap**: minhyeoky
+- **Compile Command**: `qmk compile -kb crkbd/rev4_1/standard -km minhyeoky`
+
+## Quick Commands
+- **Compile Firmware**: `qmk compile -kb crkbd/rev4_1/standard -km minhyeoky`
+- **Flash Firmware**: `qmk flash -kb crkbd/rev4_1/standard -km minhyeoky`
+- **Create New Keymap**: `qmk new-keymap -kb crkbd/rev4_1/standard`
+
+## Useful Resources
+- [Corne Keyboard Documentation](https://github.com/foostan/crkbd)
+- [QMK Corne Documentation](https://docs.qmk.fm/#/keyboards/crkbd)
+- [QMK Keycodes Reference](https://docs.qmk.fm/#/keycodes)
+- [QMK Keymap FAQ](https://docs.qmk.fm/#/faq_keymap)
+
+## Customizing Your Keymap
+To customize your keymap, edit the files in: `/keyboards/crkbd/keymaps/minhyeoky/`
+
+Key files include:
+- `keymap.c` - Main keymap definitions
+- `config.h` - Configuration options
+- `rules.mk` - Build options and features
+
+---
+
 # THIS IS THE DEVELOP BRANCH
 
 Warning- This is the `develop` branch of QMK Firmware. You may encounter broken code here. Please see [Breaking Changes](https://docs.qmk.fm/#/breaking_changes) for more information.
@@ -28,6 +56,7 @@ You can request changes by making a fork and opening a [pull request](https://gi
 * [Clueboard](/keyboards/clueboard/)
 * [Cluepad](/keyboards/clueboard/17/)
 * [Atreus](/keyboards/atreus/)
+* [Corne (crkbd)](/keyboards/crkbd/)
 
 The project also includes community support for [lots of other keyboards](/keyboards/).
 
@@ -38,3 +67,4 @@ QMK is developed and maintained by Jack Humbert of OLKB with contributions from 
 ## Official Website
 
 [qmk.fm](https://qmk.fm) is the official website of QMK, where you can find links to this page, the documentation, and the keyboards supported by QMK.
+
