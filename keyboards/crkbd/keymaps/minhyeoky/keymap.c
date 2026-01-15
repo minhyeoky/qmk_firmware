@@ -20,6 +20,10 @@
 
 #include QMK_KEYBOARD_H
 
+#if __has_include("secrets.h")
+#    include "secrets.h"
+#endif
+
 /*
  * Layer Definitions
  */
@@ -41,6 +45,10 @@ enum custom_keycodes {
     SLACK_COPY_LINK, // Copy link in Slack
     CAPTURE,        // macOS screen capture
     RECENT_SPACE,   // skhd (yabai - recent space)
+    SEC_ID,         // Secret ID
+    SEC_PW,         // Secret Password
+    KVM_TOGGLE,     // Toggle KVM between PC1 and PC2
+    KVM_BEEP_OFF,   // Turn off KVM beep sound
 };
 
 /*
@@ -119,10 +127,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         │       │       │ Nav   │ Bksp  │ │ Sym   │ R Nav │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
-    [BASE] = LAYOUT_split_3x6_3(
-        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                       KC_Y,    KC_U,    KC_I,    KC_O,    KC_SCLN, KC_BSLS,
-        OS_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                       KC_H,    KC_J,    KC_K,    KC_L,    KC_P,    KC_QUOT,
-        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                       KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
+    [BASE] = LAYOUT_split_3x6_3_ex2(
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KVM_TOGGLE, XXXXXXX,  KC_Y,    KC_U,    KC_I,    KC_O,    KC_SCLN, KC_BSLS,
+        OS_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    SEC_PW, XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    KC_P,    KC_QUOT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
                                    OS_LALT, OS_LGUI, ENT_OR_LNAV, KC_BSPC, LT_SPC, LT_RCMD
     ),
 
@@ -137,10 +145,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         │       │       │ Space │       │ │       │       │       │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
-    [SYMBOL] = LAYOUT_split_3x6_3(
-        _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,                       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
-        _______, XXXXXXX, KC_LCBR, KC_RCBR, KC_GRV,  KC_TILD,                    KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,XXXXXXX, XXXXXXX,
-        _______, XXXXXXX, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC,                    XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, _______,
+    [SYMBOL] = LAYOUT_split_3x6_3_ex2(
+        _______, KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    _______, _______, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    XXXXXXX,
+        _______, XXXXXXX, KC_LCBR, KC_RCBR, KC_GRV,  KC_TILD, _______, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,XXXXXXX, XXXXXXX,
+        _______, XXXXXXX, KC_LPRN, KC_RPRN, KC_LBRC, KC_RBRC,                   XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, _______,
                                    _______, _______, KC_SPC,  _______, _______, _______
     ),
 
@@ -155,10 +163,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         │       │       │       │       │ │       │   0   │   0   │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
-    [L_NAV] = LAYOUT_split_3x6_3(
-        _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                    XXXXXXX, KC_7,    KC_8,    KC_9,    XXXXXXX, _______,
-        _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, RECENT_SPACE,                    XXXXXXX, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
-        MO(MANAGE),_______,WINDOWS,SLACK_COPY_LINK,XXXXXXX,CAPTURE,         XXXXXXX, KC_1,    KC_2,    KC_3,    _______, KC_0,
+    [L_NAV] = LAYOUT_split_3x6_3_ex2(
+        _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5, _______, _______, XXXXXXX, KC_7,    KC_8,    KC_9,    XXXXXXX, _______,
+        _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, RECENT_SPACE, _______, _______, XXXXXXX, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
+        MO(MANAGE),_______,WINDOWS,SLACK_COPY_LINK,XXXXXXX,CAPTURE,                   XXXXXXX, KC_1,    KC_2,    KC_3,    _______, KC_0,
                                    _______, _______, _______, _______, KC_0,    KC_0
     ),
 
@@ -173,10 +181,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         │       │       │       │       │ │       │       │       │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
-    [R_NAV] = LAYOUT_split_3x6_3(
-        _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5,                    XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, XXXXXXX,
-        _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS,                    KC_MPRV, VIM_CNEXT,VIM_CPREV,KC_MNXT,XXXXXXX, _______,
-        _______, _______, _______, _______, _______, _______,                    XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+    [R_NAV] = LAYOUT_split_3x6_3_ex2(
+        _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5, _______, _______, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, XXXXXXX,
+        _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS, _______, _______, KC_MPRV, VIM_CNEXT,VIM_CPREV,KC_MNXT,XXXXXXX, _______,
+        _______, _______, _______, _______, _______, _______,                   XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    _______, _______, _______, _______, _______, XXXXXXX
     ),
 
@@ -191,13 +199,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         │       │       │       │       │ │       │       │       │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
-    [MANAGE] = LAYOUT_split_3x6_3(
-        QK_BOOT, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX,                    XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
-        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX,                    KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
-        XXXXXXX, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                    XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX,
+    [MANAGE] = LAYOUT_split_3x6_3_ex2(
+        QK_BOOT, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX, _______, KVM_BEEP_OFF, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
+        RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
+        XXXXXXX, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 };
+
+/*
+ * KVM Switch State
+ */
+static bool kvm_current_pc = false;  // false = PC1, true = PC2
 
 /**
  * Process custom keycodes
@@ -225,6 +238,39 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case RECENT_SPACE:
             if (record->event.pressed) {
                 SEND_STRING(SS_LALT(SS_LSFT(SS_TAP(X_TAB))));
+            }
+            break;
+
+#ifdef SECRET_ID
+        case SEC_ID:
+            if (record->event.pressed) {
+                SEND_STRING(SECRET_ID);
+            }
+            break;
+#endif
+
+#ifdef SECRET_PW
+        case SEC_PW:
+            if (record->event.pressed) {
+                SEND_STRING(SECRET_PW);
+            }
+            break;
+#endif
+
+        case KVM_TOGGLE:
+            if (record->event.pressed) {
+                kvm_current_pc = !kvm_current_pc;
+                if (kvm_current_pc) {
+                    SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "2" SS_TAP(X_ENT));
+                } else {
+                    SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "1" SS_TAP(X_ENT));
+                }
+            }
+            break;
+
+        case KVM_BEEP_OFF:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "B0");
             }
             break;
     }
