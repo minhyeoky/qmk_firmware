@@ -31,7 +31,6 @@ enum layers {
     BASE = 0,
     SYMBOL,
     L_NAV,
-    R_NAV,
     MANAGE
 };
 
@@ -77,7 +76,6 @@ enum custom_keycodes {
  */
 #define LT_SPC     LT(SYMBOL, KC_SPC)   // Space when tapped, Symbol layer when held
 #define ENT_OR_LNAV LT(L_NAV, KC_ENT)   // Enter when tapped, L_NAV layer when held
-#define LT_RCMD    LT(R_NAV, KC_RCMD)   // Right Command when tapped, R_NAV layer when held
 
 /*
  * One-Shot Modifiers
@@ -123,15 +121,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
      * │ LShift│   Z   │   X   │   C   │   V   │   B   │                   │   N   │   M   │   ,   │   .   │   /   │ RShift│
      * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬───────┼───────┴───────┴───────┘
-     *                         │ LAlt  │ LGui  │Enter/L│       │ │       │ Space/│ RCMD/ │
-     *                         │       │       │ Nav   │ Bksp  │ │ Sym   │ R Nav │
+     *                         │ LAlt  │ LGui  │Enter/L│       │ │       │ Space/│       │
+     *                         │       │       │ Nav   │ Bksp  │ │ Sym   │ RCMD  │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
     [BASE] = LAYOUT_split_3x6_3_ex2(
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KVM_TOGGLE, XXXXXXX,  KC_Y,    KC_U,    KC_I,    KC_O,    KC_SCLN, KC_BSLS,
         OS_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    SEC_PW, XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    KC_P,    KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
-                                   OS_LALT, OS_LGUI, ENT_OR_LNAV, KC_BSPC, LT_SPC, LT_RCMD
+                                   OS_LALT, OS_LGUI, ENT_OR_LNAV, KC_BSPC, LT_SPC, KC_RCMD
     ),
 
     /* Symbol Layer
@@ -168,24 +166,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, RECENT_SPACE, _______, _______, XXXXXXX, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
         MO(MANAGE),_______,WINDOWS,SLACK_COPY_LINK,XXXXXXX,CAPTURE,                   XXXXXXX, KC_1,    KC_2,    KC_3,    _______, KC_0,
                                    _______, _______, _______, _______, KC_0,    KC_0
-    ),
-
-    /* Right Navigation Layer
-     * ┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-     * │       │ Disp1 │ Disp2 │ Disp3 │ Disp4 │ Disp5 │                   │       │       │BrghtnD│BrghtnU│       │       │
-     * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-     * │       │BrwsrB │BrwsrP │BrwsrN │BrwsrF │Window │                   │MediaPv│VimNext│VimPrev│MediaNx│       │       │
-     * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-     * │       │       │       │       │       │       │                   │       │MediaPl│       │       │       │       │
-     * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬─────────┼───────┴───────┴───────┘
-     *                         │       │       │       │       │ │       │       │       │
-     *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
-     */
-    [R_NAV] = LAYOUT_split_3x6_3_ex2(
-        _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5, _______, _______, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, XXXXXXX,
-        _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, WINDOWS, _______, _______, KC_MPRV, VIM_CNEXT,VIM_CPREV,KC_MNXT,XXXXXXX, _______,
-        _______, _______, _______, _______, _______, _______,                   XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
-                                   _______, _______, _______, _______, _______, XXXXXXX
     ),
 
     /* Management Layer
