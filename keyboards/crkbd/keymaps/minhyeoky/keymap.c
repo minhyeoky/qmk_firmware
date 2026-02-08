@@ -31,7 +31,8 @@ enum layers {
     BASE = 0,
     SYMBOL,
     L_NAV,
-    MANAGE
+    MANAGE,
+    DANGER
 };
 
 /*
@@ -170,19 +171,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     /* Management Layer
      * ┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
-     * │QK_BOOT│RGBPrev│RGBNext│       │       │       │                   │       │       │BrghtnD│BrghtnU│       │Sleep  │
+     * │       │RGBPrev│RGBNext│       │       │       │                   │       │       │BrghtnD│BrghtnU│       │Sleep  │
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
      * │RGBTogg│RGBHueU│RGBSatU│RGBValU│RGBSpdU│       │                   │MediaPv│VolDn  │VolUp  │MediaNx│       │       │
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-     * │       │RGBHueD│RGBSatD│RGBValD│RGBSpdD│       │                   │       │       │MediaPl│       │       │       │
+     * │       │RGBHueD│RGBSatD│RGBValD│RGBSpdD│       │                   │       │       │MediaPl│       │       │DANGER │
      * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬─────────┼───────┴───────┴───────┘
      *                         │       │       │       │       │ │       │       │       │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
     [MANAGE] = LAYOUT_split_3x6_3_ex2(
-        QK_BOOT, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX, _______, KVM_BEEP_OFF, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
+        XXXXXXX, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX, _______, KVM_BEEP_OFF, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
         RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
-        XXXXXXX, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, MO(DANGER),
+                                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
+    ),
+
+    /* DANGER Layer - QK_BOOT only (Enter + MO(MANAGE) + MO(DANGER) required)
+     * ┌───────┬───────┬───────┬───────┬───────┬───────┐                   ┌───────┬───────┬───────┬───────┬───────┬───────┐
+     * │       │       │       │       │       │       │                   │       │       │       │       │       │QK_BOOT│
+     * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
+     * │       │       │       │       │       │       │                   │       │       │       │       │       │       │
+     * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
+     * │       │       │       │       │       │       │                   │       │       │       │       │       │       │
+     * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬─────────┼───────┴───────┴───────┘
+     *                         │       │       │       │       │ │       │       │       │
+     *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
+     */
+    [DANGER] = LAYOUT_split_3x6_3_ex2(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, QK_BOOT,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                   XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 };
