@@ -49,6 +49,10 @@ enum custom_keycodes {
     SEC_PW,         // Secret Password
     KVM_TOGGLE,     // Toggle KVM between PC1 and PC2
     KVM_BEEP_OFF,   // Turn off KVM beep sound
+    PLAT_TOGGLE,    // Toggle mac/win platform mode without touching the KVM
+    LANG_TOGGLE,    // Korean/English input toggle (mac: RGUI, win: Hangeul)
+    SPC_PREV,       // Previous desktop/space
+    SPC_NEXT,       // Next desktop/space
 };
 
 /*
@@ -71,6 +75,21 @@ enum custom_keycodes {
 #define DISPY_3  C(KC_3)        // Display 3
 #define DISPY_4  C(KC_4)        // Display 4
 #define DISPY_5  C(KC_5)        // Display 5
+
+/*
+ * Platform Mode (mac / win)
+ *
+ * PC1 = mac, PC2 = win. The KVM position and the platform mode are the same
+ * fact, so they are stored as one bit: keymap_config.swap_lctl_lgui, which QMK
+ * already persists in EEPROM and reloads on boot. Setting it also makes the
+ * magic Ctrl/GUI swap apply to every keymap keycode that carries a modifier
+ * (OSM(), G(...), ...), so win mode moves Cmd to the Ctrl position for free.
+ *
+ * SEND_STRING macros bypass that swap (register_code() does not go through
+ * keycode_config()), so any SEND_STRING that must differ per platform has to
+ * branch on plat_is_win() explicitly.
+ */
+#define WIN_HANGEUL KC_LNG1     // Swap to KC_RALT if the win Korean IME ignores LANG1
 
 /*
  * Tap-Hold Definitions
@@ -122,15 +141,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
      * │ LShift│   Z   │   X   │   C   │   V   │   B   │                   │   N   │   M   │   ,   │   .   │   /   │ RShift│
      * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬───────┼───────┴───────┴───────┘
-     *                         │ LAlt  │ LGui  │Enter/L│       │ │       │ Space/│       │
-     *                         │       │       │ Nav   │ Bksp  │ │ Sym   │ RCMD  │
+     *                         │ LAlt  │ LGui  │Enter/L│       │ │       │ Space/│ 한/영 │
+     *                         │       │       │ Nav   │ Bksp  │ │ Sym   │       │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
     [BASE] = LAYOUT_split_3x6_3_ex2(
         KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KVM_TOGGLE, XXXXXXX,  KC_Y,    KC_U,    KC_I,    KC_O,    KC_SCLN, KC_BSLS,
         OS_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    SEC_PW, XXXXXXX,  KC_H,    KC_J,    KC_K,    KC_L,    KC_P,    KC_QUOT,
         KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, OS_RSFT,
-                                   OS_LALT, OS_LGUI, ENT_OR_LNAV, KC_BSPC, LT_SPC, KC_RCMD
+                                   OS_LALT, OS_LGUI, ENT_OR_LNAV, KC_BSPC, LT_SPC, LANG_TOGGLE
     ),
 
     /* Symbol Layer
@@ -157,7 +176,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
      * │       │BrwsrB │BrwsrP │BrwsrN │BrwsrF │RecntSp│                   │       │   4   │   5   │   6   │       │       │
      * ├───────┼───────┼───────┼───────┼───────┼───────┤                   ├───────┼───────┼───────┼───────┼───────┼───────┤
-     * │Manage │       │Window │SlackLk│       │CapScr │                   │       │   1   │   2   │   3   │       │   0   │
+     * │Manage │SpcPrev│Window │SpcNext│SlackLk│CapScr │                   │       │   1   │   2   │   3   │       │   0   │
      * └───────┴───────┴───────┼───────┼───────┼───────┼───────┐ ┌───────┬───────┬───────┬─────────┼───────┴───────┴───────┘
      *                         │       │       │       │       │ │       │   0   │   0   │
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
@@ -165,7 +184,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_NAV] = LAYOUT_split_3x6_3_ex2(
         _______, DISPY_1, DISPY_2, DISPY_3, DISPY_4, DISPY_5, _______, _______, XXXXXXX, KC_7,    KC_8,    KC_9,    XXXXXXX, _______,
         _______, BRWSR_B, BRWSR_P, BRWSR_N, BRWSR_F, RECENT_SPACE, _______, _______, XXXXXXX, KC_4,    KC_5,    KC_6,    XXXXXXX, _______,
-        MO(MANAGE),_______,WINDOWS,SLACK_COPY_LINK,XXXXXXX,CAPTURE,                   XXXXXXX, KC_1,    KC_2,    KC_3,    _______, KC_0,
+        MO(MANAGE),SPC_PREV,WINDOWS,SPC_NEXT,SLACK_COPY_LINK,CAPTURE,                XXXXXXX, KC_1,    KC_2,    KC_3,    _______, KC_0,
                                    _______, _______, _______, _______, KC_0,    KC_0
     ),
 
@@ -181,7 +200,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *                         └───────┴───────┴───────┴───────┘ └───────┴───────┴───────┘
      */
     [MANAGE] = LAYOUT_split_3x6_3_ex2(
-        XXXXXXX, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX, _______, KVM_BEEP_OFF, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
+        XXXXXXX, RM_PREV, RM_NEXT, XXXXXXX, XXXXXXX, XXXXXXX, PLAT_TOGGLE, KVM_BEEP_OFF, XXXXXXX, XXXXXXX, KC_BRMD, KC_BRMU, XXXXXXX, KC_SYSTEM_SLEEP,
         RM_TOGG, RM_HUEU, RM_SATU, RM_VALU, RM_SPDU, XXXXXXX, _______, _______, KC_MPRV, KC_VOLD, KC_VOLU, KC_MNXT, XXXXXXX, XXXXXXX,
         XXXXXXX, RM_HUED, RM_SATD, RM_VALD, RM_SPDD, XXXXXXX,                   XXXXXXX, XXXXXXX, KC_MPLY, XXXXXXX, XXXXXXX, MO(DANGER),
                                    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
@@ -207,9 +226,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 /*
- * KVM Switch State
+ * Platform / KVM State
+ *
+ * One bit for both: false = PC1 = mac, true = PC2 = win.
  */
-static bool kvm_current_pc = false;  // false = PC1, true = PC2
+static bool plat_is_win(void) {
+    return keymap_config.swap_lctl_lgui;
+}
+
+static void plat_set(bool win) {
+    if (plat_is_win() == win) {
+        return;  // no EEPROM write when nothing changes
+    }
+    keymap_config.swap_lctl_lgui = win;
+    keymap_config.swap_rctl_rgui = win;
+    eeconfig_update_keymap(&keymap_config);
+    clear_keyboard();  // the swap changes mid-flight mods; drop them
+}
 
 /**
  * Process custom keycodes
@@ -258,18 +291,63 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
         case KVM_TOGGLE:
             if (record->event.pressed) {
-                kvm_current_pc = !kvm_current_pc;
-                if (kvm_current_pc) {
+                // The KVM is addressed by absolute port number, so a wrong
+                // stored state corrects itself on the next press.
+                bool win = !plat_is_win();
+                if (win) {
                     SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "2" SS_TAP(X_ENT));
                 } else {
                     SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "1" SS_TAP(X_ENT));
                 }
+                plat_set(win);
             }
             break;
 
         case KVM_BEEP_OFF:
             if (record->event.pressed) {
                 SEND_STRING(SS_TAP(X_SCRL) SS_TAP(X_SCRL) "B0");
+            }
+            break;
+
+        case PLAT_TOGGLE:
+            // Realigns the keyboard when the KVM was switched by its button or
+            // remote; does not touch the KVM itself.
+            if (record->event.pressed) {
+                plat_set(!plat_is_win());
+            }
+            break;
+
+        case LANG_TOGGLE: {
+            // Latch the keycode chosen on press so a mode change mid-hold
+            // cannot leave the other one registered.
+            static uint16_t held = KC_NO;
+            if (record->event.pressed) {
+                held = plat_is_win() ? WIN_HANGEUL : KC_RGUI;
+                register_code(held);
+            } else if (held != KC_NO) {
+                unregister_code(held);
+                held = KC_NO;
+            }
+            return false;
+        }
+
+        case SPC_PREV:
+            if (record->event.pressed) {
+                if (plat_is_win()) {
+                    SEND_STRING(SS_LGUI(SS_LCTL(SS_TAP(X_LEFT))));
+                } else {
+                    SEND_STRING(SS_LCTL(SS_TAP(X_LEFT)));
+                }
+            }
+            break;
+
+        case SPC_NEXT:
+            if (record->event.pressed) {
+                if (plat_is_win()) {
+                    SEND_STRING(SS_LGUI(SS_LCTL(SS_TAP(X_RIGHT))));
+                } else {
+                    SEND_STRING(SS_LCTL(SS_TAP(X_RIGHT)));
+                }
             }
             break;
     }
