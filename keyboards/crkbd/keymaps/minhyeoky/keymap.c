@@ -245,6 +245,37 @@ static void plat_set(bool win) {
 }
 
 /**
+ * Caps Word
+ *
+ * Continuation matches ZMK &caps_word with continue-list UNDERSCORE MINUS
+ * BACKSPACE DELETE: letters are shifted, digits pass, '-' stays '-' (the QMK
+ * default turns it into '_'), Shift+'-' types '_', and pressing Shift itself
+ * does not end the word. Other modifiers end it, unlike ZMK, which ignores
+ * every modifier.
+ */
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));
+            return true;
+
+        case KC_LSFT:
+        case KC_RSFT:
+        case OS_LSFT:
+        case OS_RSFT:
+        case KC_1 ... KC_0:
+        case KC_MINS:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+
+        default:
+            return false;
+    }
+}
+
+/**
  * Process custom keycodes
  */
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -322,6 +353,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             // cannot leave the other one registered.
             static uint16_t held = KC_NO;
             if (record->event.pressed) {
+                caps_word_off();  // returning false hides this key from Caps Word
                 held = plat_is_win() ? WIN_HANGEUL : KC_RGUI;
                 register_code(held);
             } else if (held != KC_NO) {
