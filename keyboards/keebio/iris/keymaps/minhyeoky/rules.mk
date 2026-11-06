@@ -1,4 +1,0 @@
-# My Rules
-COMBO_ENABLE = yes
-CONSOLE_ENABLE = no
-MOUSEKEY_ENABLE = yes
