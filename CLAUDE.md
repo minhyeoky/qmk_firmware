@@ -44,3 +44,19 @@ Two mechanisms, and the split matters when adding platform-dependent keys:
 
 `WIN_HANGEUL` defaults to `KC_LNG1`; switch it to `KC_RALT` if the Windows
 Korean IME ignores LANG1 (depends on the installed keyboard driver).
+
+## Caps Word
+
+Both shifts turn it on (`BOTH_SHIFTS_TURNS_ON_CAPS_WORD`). It mirrors ZMK
+`&caps_word` on the wireless Corne so both boards type the same, which is why
+it departs from QMK defaults:
+
+- No idle timeout (`CAPS_WORD_IDLE_TIMEOUT 0`).
+- `caps_word_press_user()` lets Shift (held or one-shot) and `-` continue the
+  word; `-` stays `-`, Shift+`-` types `_`. Other modifiers end it.
+- `LANG_TOGGLE` returns `false`, so Caps Word never sees it; it calls
+  `caps_word_off()` itself.
+
+The ZMK side lives in the wireless Corne's ZMK config (`config/corne.keymap`);
+it needs `MINUS` in the `&caps_word` `continue-list` to match. Change either
+board's Caps Word rules together with the other.

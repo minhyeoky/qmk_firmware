@@ -40,6 +40,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define ONESHOT_TIMEOUT 5000  // ms
 #define COMBO_TERM 20         // ms
 
+// Caps Word mirrors ZMK &caps_word; rules in caps_word_press_user (keymap.c)
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
+#define CAPS_WORD_IDLE_TIMEOUT 0
+
 #ifdef RGB_MATRIX_ENABLE
 #   define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 // #   define RGB_MATRIX_KEYRELEASES // reacts to keyreleases (instead of keypresses)
